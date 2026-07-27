@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>MindTech Industries · African Quantum AI</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap');
+
+        :root {
+            --black: #020407;
+            --deep: #050c14;
+            --panel: rgba(8, 15, 26, 0.7);
+            --border: #0d2035;
+            --glow-blue: #0066FF;
+            --glow-gold: #FFD700;
+            --glow-cyan: #00ffcc;
+            --text: #8ab4cc;
+            --text-dim: #2d4a5e;
+            --white: #e8f4ff;
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(0, 102, 255, 0.15);
+            --gold-glow: rgba(255, 215, 0, 0.3);
+            --primary: #0066FF;
+            --secondary: #00ffcc;
+            --quantum: #FFD700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--black);
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 102, 255, 0.015) 2px, rgba(0, 102, 255, 0.015) 4px);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.4;
+        }
+
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(0, 102, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 102, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .scan-sweep {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 102, 255, 0.4), transparent);
+            animation: sweep 8s linear infinite;
+            pointer-events: none;
+            z-index: 998;
+        }
+
+        @keyframes sweep {
+            0% {
+                top: 0;
+                opacity: 1;
+            }
+            95% {
+                opacity: 0.3;
+            }
+            100% {
+                top: 100vh;
+                opacity: 0;
+            }
+        }
+
+        .corner {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border-color: rgba(212, 175, 55, 0.3);
+            border-style: solid;
+            z-index: 500;
+        }
+        .corner-tl {
+            top: 16px;
+            left: 16px;
+            border-width: 2px 0 0 2px;
+        }
+        .corner-tr {
+            top: 16px;
+            right: 16px;
+            border-width: 2px 2px 0 0;
+        }
+        .corner-bl {
+            bottom: 16px;
+            left: 16px;
+            border-width: 0 0 2px 2px;
+        }
+        .corner-br {
+            bottom: 16px;
+            right: 16px;
+            border-width: 0 2px 2px 0;
+        }
+
+        .blink-title {
+            animation: blinkText 3s infinite;
+            display: inline-block;
+        }
+        @keyframes blinkText {
+            0%,
+            90%,
+            100% {
+                opacity: 1;
+            }
+            95% {
+                opacity: 0.1;
+            }
+        }
+
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            transition: all 0.3s ease;
+            padding: 28px 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .glass-card:hover {
+            border-color: var(--glow-gold);
+            box-shadow: 0 0 40px var(--gold-glow);
+        }
+        .glass-card.gold-border {
+            border-color: rgba(212, 175, 55, 0.2);
+        }
+        .glass-card.gold-border:hover {
+            border-color: var(--glow-gold);
+            box-shadow: 0 0 40px var(--gold-glow);
+        }
+
+        .glass-btn {
+            display: inline-block;
+            padding: 14px 40px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid var(--glow-gold);
+            background: rgba(212, 175, 55, 0.06);
+            color: var(--glow-gold);
+            backdrop-filter: blur(8px);
+            font-family: 'Rajdhani', sans-serif;
+        }
+        .glass-btn:hover {
+            background: var(--glow-gold);
+            color: var(--black);
+            box-shadow: 0 0 48px var(--gold-glow);
+            transform: translateY(-3px);
+        }
+        .glass-btn-gold {
+            background: var(--glow-gold);
+            color: var(--black);
+            border-color: var(--glow-gold);
+        }
+        .glass-btn-gold:hover {
+            background: #cca300;
+            border-color: #cca300;
+            color: var(--black);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-block {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo-img {
+            height: 70px;
+            width: auto;
+            filter: drop-shadow(0 0 25px var(--gold-glow));
+            transition: filter 0.3s, transform 0.3s;
+        }
+        .logo-img:hover {
+            filter: drop-shadow(0 0 50px var(--glow-gold));
+            transform: scale(1.03);
+        }
+        .logo-text-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .logo-eyebrow {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: var(--glow-gold);
+            text-transform: uppercase;
+            animation: blinkText 2s infinite;
+        }
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 38px;
+            letter-spacing: 4px;
+            color: var(--white);
+            line-height: 1;
+        }
+        .logo .blink-title {
+            color: var(--glow-gold);
+        }
+        .logo-sub {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 5px;
+            color: var(--text-dim);
+            margin-top: 2px;
+            text-transform: uppercase;
+        }
+        .header-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+        .quantum-badge-top {
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 30px;
+            padding: 6px 18px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            color: var(--glow-gold);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 102, 255, 0.08);
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            padding: 6px 14px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--glow-cyan);
+        }
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--glow-cyan);
+            box-shadow: 0 0 8px var(--glow-cyan);
+            animation: pulse-dot 1.5s infinite;
+        }
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(0, 102, 255, 0.03) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-left: 3px solid var(--glow-gold);
+            padding: 40px 48px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--glow-gold), var(--glow-cyan), transparent);
+            opacity: 0.6;
+        }
+        .hero-eyebrow {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: var(--glow-gold);
+            margin-bottom: 6px;
+            text-shadow: 0 0 10px var(--gold-glow);
+        }
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 52px;
+            letter-spacing: 4px;
+            color: var(--white);
+            line-height: 1.1;
+        }
+        .hero-title .blink-title {
+            color: var(--glow-gold);
+        }
+        .hero-desc {
+            font-size: 16px;
+            color: var(--text);
+            margin: 12px 0 0;
+            max-width: 700px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        .hero-desc strong {
+            color: var(--glow-gold);
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px 16px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            border-color: var(--glow-gold);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .stat-value {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 36px;
+            letter-spacing: 2px;
+            color: var(--glow-gold);
+        }
+        .stat-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+        .platform-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .platform-item:hover {
+            border-color: var(--glow-gold);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+        .platform-item .icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .platform-item .name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 22px;
+            color: var(--white);
+            letter-spacing: 1px;
+        }
+        .platform-item .desc {
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-top: 6px;
+        }
+        .platform-item .status {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 4px 16px;
+            border-radius: 40px;
+            background: rgba(0, 255, 136, 0.08);
+            color: var(--glow-cyan);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            font-size: 10px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        /* ===== IBM VERIFICATION GRID ===== */
+        .ibm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .ibm-btn {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            text-decoration: none;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+        }
+        .ibm-btn:hover {
+            border-color: var(--glow-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 215, 0, 0.04);
+        }
+        .ibm-btn i {
+            font-size: 22px;
+            min-width: 28px;
+        }
+        .ibm-btn .chip {
+            background: rgba(0, 255, 136, 0.12);
+            color: var(--glow-cyan);
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-size: 10px;
+            font-family: 'Share Tech Mono', monospace;
+            margin-left: auto;
+        }
+        .ibm-btn .ibm-detail {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.3;
+        }
+        .ibm-btn .ibm-detail .label {
+            font-weight: 600;
+            color: var(--white);
+        }
+        .ibm-btn .ibm-detail .sub {
+            font-size: 10px;
+            color: var(--text-dim);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .form-section {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.03) 0%, rgba(0, 102, 255, 0.03) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 48px;
+            margin-top: 40px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            color: var(--white);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--glow-gold);
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glow-gold);
+            border-radius: 16px;
+            padding: 16px 32px;
+            color: var(--white);
+            font-size: 14px;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.5s ease;
+            pointer-events: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            font-family: 'Rajdhani', sans-serif;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+        .toast i {
+            margin-right: 12px;
+            color: var(--glow-gold);
+        }
+
+        .footer {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 30px;
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-left {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            line-height: 2;
+        }
+        .footer-right {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-align: right;
+            line-height: 2;
+        }
+        .footer-logos {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .footer-logos img {
+            height: 35px;
+            width: auto;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .footer-logos img:hover {
+            opacity: 1;
+        }
+        .footer-quantum {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px;
+            color: var(--glow-gold);
+            letter-spacing: 1px;
+        }
+
+        .papers-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+        }
+        .paper-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--glass-border);
+            border-radius: 60px;
+            padding: 12px 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            transition: all 0.3s;
+        }
+        .paper-btn:hover {
+            border-color: var(--glow-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--gold-glow);
+        }
+        .paper-btn i {
+            color: var(--glow-gold);
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            margin: 20px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0, 180, 216, 0.12);
+            border: 2px solid rgba(212, 175, 55, 0.25);
+            background: #000;
+        }
+        .video-wrapper iframe {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: none;
+        }
+
+        /* Form Submit Success/Error States */
+        .form-submit-success {
+            background: rgba(0, 204, 136, 0.1);
+            border: 1px solid rgba(0, 204, 136, 0.3);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 16px;
+            display: none;
+        }
+        .form-submit-success.show {
+            display: block;
+        }
+        .form-submit-error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 16px;
+            display: none;
+        }
+        .form-submit-error.show {
+            display: block;
+        }
+
+        /* Timeline */
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s;
+        }
+        .timeline-item:hover {
+            background: rgba(255, 215, 0, 0.02);
+            padding-left: 8px;
+        }
+        .timeline-year {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            color: var(--glow-gold);
+            min-width: 80px;
+            line-height: 1.2;
+        }
+        .timeline-content {
+            flex: 1;
+        }
+        .timeline-content h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            color: var(--white);
+            letter-spacing: 1px;
+        }
+        .timeline-content p {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.6;
+            margin-top: 4px;
+        }
+        .timeline-content .highlight {
+            color: var(--glow-gold);
+        }
+
+        @media (max-width: 992px) {
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero-title {
+                font-size: 40px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .header-right {
+                align-items: center;
+            }
+            .logo-block {
+                flex-direction: column;
+            }
+            .logo-img {
+                height: 55px;
+            }
+            .hero {
+                padding: 24px;
+            }
+            .hero-title {
+                font-size: 32px;
+            }
+            .hero-desc {
+                font-size: 14px;
+            }
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .form-section {
+                padding: 24px;
+            }
+            .footer {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-right {
+                text-align: center;
+            }
+            .footer-logos {
+                gap: 12px;
+            }
+            .footer-logos img {
+                height: 28px;
+            }
+            .timeline-item {
+                flex-direction: column;
+                gap: 4px;
+            }
+            .timeline-year {
+                font-size: 22px;
+                min-width: auto;
+            }
+            .ibm-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 28px;
+            }
+            .hero-title {
+                font-size: 26px;
+            }
+            .stat-value {
+                font-size: 28px;
+            }
+            .platform-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-logos img {
+                height: 22px;
+            }
+            .ibm-btn {
+                font-size: 12px;
+                padding: 12px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-bg"></div>
+    <div class="scan-sweep"></div>
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+
+    <div class="wrapper">
+
+        <!-- ===== HEADER ===== -->
+        <header class="header">
+            <div class="logo-block">
+                <img src="https://i.postimg.cc/zXW78GNH/Mind-Tech-Transparent-Logo.png" alt="MindTech Industries" class="logo-img" onerror="this.src='https://placehold.co/70x70/0066FF/white?text=MT'" />
+                <div class="logo-text-group">
+                    <div class="logo-eyebrow">⚡ SOVEREIGN DEEP-TECH · IBM VERIFIED</div>
+                    <div class="logo">
+                        <span class="blink-title">MindTech</span> Industries
+                    </div>
+                    <div class="logo-sub">AFRICAN QUANTUM UTILITY</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="quantum-badge-top">
+                    <i class="fas fa-shield-alt"></i>
+                    CHSH S=2.76 · 98.4% · SA 2026/05142
+                </div>
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    QUANTUM ACTIVE
+                </div>
+                <span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:2px;" id="ts">INITIALIZING...</span>
+            </div>
+        </header>
+
+        <!-- ===== HERO ===== -->
+        <section class="hero glass-card gold-border">
+            <div class="hero-eyebrow blink-title">⚛️ AFRICA'S QUANTUM FUTURE · BUILT TODAY</div>
+            <h1 class="hero-title">
+                <span class="blink-title">Quantum</span> Utility for the <span class="blink-title">Real</span> World
+            </h1>
+            <p class="hero-desc">
+                <strong>Hardware-verified · Patent-protected · Live</strong><br />
+                MindTech Industries is the first quantum technology company with hardware-verified quantum entanglement — CHSH S=2.76, confirmed on IBM Kingston and IBM Torino processors, 38% above the classical bound.
+            </p>
+            <p class="hero-desc" style="margin-top:8px;font-size:14px;">
+                Built from Johannesburg, Gauteng, we have filed <strong>South African Patent 2026/05142</strong> through ENSafrica — the continent's top-tier IP firm — covering an adaptive learning ecosystem with integrated safety monitoring and quantum-secure verification.
+            </p>
+        </section>
+
+        <!-- ===== STATS ===== -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-value">2.76</div>
+                <div class="stat-label">CHSH S · Bell Violation</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">98.4%</div>
+                <div class="stat-label">Quantum Correlation</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">38%</div>
+                <div class="stat-label">Above Classical Limit</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">156</div>
+                <div class="stat-label">IBM Qubits · Kingston</div>
+            </div>
+        </div>
+
+        <!-- ===== IBM VERIFICATION GRID ===== -->
+        <section class="glass-card gold-border" style="margin-bottom: 40px;">
+            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:var(--white);margin-bottom:8px;">
+                <i class="fas fa-microchip" style="color:var(--glow-gold);"></i> IBM Hardware Verification — Job IDs Auditable
+            </h2>
+            <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px;font-family:'Share Tech Mono',monospace;">
+                CHSH S=2.76 · 98.4% Correlation · 38% Above Classical
+            </p>
+            <div class="ibm-grid">
+                <a href="https://drive.google.com/file/d/18aQ-3V-Uwsl15L3MlM-Kkst3syRedyM4/view?usp=sharing" target="_blank" class="ibm-btn">
+                    <i class="fas fa-microchip" style="color: var(--primary);"></i>
+                    <div class="ibm-detail">
+                        <span class="label">IBM Torino</span>
+                        <span class="sub">133 qubits · 24 Dec 2025</span>
+                    </div>
+                    <span class="chip">98.4%</span>
+                </a>
+                <a href="https://drive.google.com/file/d/1pbe1foTVxaTal78jbCNjRZocCDsz3Z6j/view?usp=sharing" target="_blank" class="ibm-btn">
+                    <i class="fas fa-microchip" style="color: var(--secondary);"></i>
+                    <div class="ibm-detail">
+                        <span class="label">IBM Kingston</span>
+                        <span class="sub">156 qubits · 25 Jun 2026</span>
+                    </div>
+                    <span class="chip">98.4%</span>
+                </a>
+                <a href="https://drive.google.com/file/d/1ylMSqRRs1IDdHXWOn-WArnMSDx6vdCy_/view?usp=sharing" target="_blank" class="ibm-btn">
+                    <i class="fas fa-microchip" style="color: var(--quantum);"></i>
+                    <div class="ibm-detail">
+                        <span class="label">IBM Kingston (2)</span>
+                        <span class="sub">156 qubits · 25 Jun 2026</span>
+                    </div>
+                    <span class="chip">98.4%</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ===== HERITAGE / TIMELINE SECTION ===== -->
+        <section class="glass-card gold-border" style="margin-bottom: 40px;">
+            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--glow-gold);margin-bottom:8px;">
+                <i class="fas fa-timeline"></i> The 20-Year Road to Africa's Quantum OS
+            </h2>
+            <p style="font-size:14px;color:var(--text);margin-bottom:24px;line-height:1.6;">
+                Twenty years of studying how systems fail, how businesses break, how people are left behind — and then building the quantum infrastructure to fix all of it.
+            </p>
+
+            <!-- TIMELINE -->
+            <div class="timeline-item">
+                <div class="timeline-year">1998</div>
+                <div class="timeline-content">
+                    <h4>The Foundation</h4>
+                    <p>University of Johannesburg. Management Services. Quantitative Techniques and Organisational Effectiveness. Not a degree in technology — a degree in how systems work and how to make them work better. The seed of everything that follows.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2002</div>
+                <div class="timeline-content">
+                    <h4>The Bridge</h4>
+                    <p>Business Link, Ipswich, United Kingdom. Using IT in Business. One course. One insight that would never leave: technology is only as powerful as the business problem it solves. Flew back to South Africa with that framework locked in.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2003</div>
+                <div class="timeline-content">
+                    <h4>Twenty Years Begin</h4>
+                    <p>Business Development Consultant. Real estate. Mining. Education. Not one industry — all of them. Watching how broken systems cost people money, time, and dignity. Filing the problems away. Building the vocabulary of cross-industry solutions that no specialist ever could.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2008</div>
+                <div class="timeline-content">
+                    <h4>The Drafting Table</h4>
+                    <p>Caddie Academy. CAD design versions 18 through 30. Eight years of architectural rendering, 3D modelling, and photo-realistic visualisation. Not software training — precision thinking. Every quantum circuit diagram, every patent figure, every system architecture drawing that followed was built on this discipline.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2009</div>
+                <div class="timeline-content">
+                    <h4>The Invention Begins</h4>
+                    <p>MindTech Industries founded. Self-directed research into AI architecture, quantum physics, bioengineering, and social systems. No university. No supervisor. No grant. BioWave™ — a radiation-free pulmonary diagnostic system for TB and silicosis — is the first invention. The mining sector has a problem. Khulu has a prototype.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2021</div>
+                <div class="timeline-content">
+                    <h4>The Brand Takes Root</h4>
+                    <p>MindTech brand established with documented historical use — later submitted to ENSafrica as evidence of prior claim. The platforms are being built. The vision is becoming a portfolio.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2025</div>
+                <div class="timeline-content">
+                    <h4>The World Takes Notice</h4>
+                    <p>Selected for the Hello Tomorrow Global Challenge — among the top deep-tech innovators worldwide. DTI engagement. ENSafrica takes on the full patent portfolio. Africa's largest law firm does not back ideas. They back evidence.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item" style="border-bottom: none;">
+                <div class="timeline-year">2026</div>
+                <div class="timeline-content">
+                    <h4>The Proof</h4>
+                    <p><span class="highlight">South African Patent 2026/05142 filed — 12 May 2026.</span> IBM Quantum verifications on Torino and Kingston processors. <span class="highlight">CHSH S=2.76. 38% above the classical bound.</span> MQOS TERERAI v2.1 deployed publicly. Six quantum applications live. Africa's first quantum operating system — built by a self-taught inventor over twenty years of refusal to stop.</p>
+                </div>
+            </div>
+
+            <div style="margin-top:20px;padding:16px;background:rgba(255,215,0,0.05);border-radius:16px;border:1px solid rgba(255,215,0,0.1);">
+                <p style="font-size:13px;color:var(--glow-gold);font-family:'Share Tech Mono',monospace;text-align:center;">
+                    <i class="fas fa-quote-left"></i> 
+                    Twenty years of studying how systems fail, how businesses break, how people are left behind — and then building the quantum infrastructure to fix all of it.
+                    <i class="fas fa-quote-right"></i>
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== PLATFORM GRID ===== -->
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--white);margin:20px 0 10px;">
+            <i class="fas fa-cube" style="color:var(--glow-gold);"></i> Our Quantum Stack
+        </h2>
+        <div class="platform-grid">
+            <a href="https://quantum-nature-modules.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">🌍</span>
+                <span class="name">Quantum AI Hub</span>
+                <span class="desc">Climate · Biodiversity · Agriculture</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://symphonious-pothos-042c80.netlify.app" target="_blank" class="platform-item">
+                <span class="icon">🧠</span>
+                <span class="name">Khensani AI</span>
+                <span class="desc">Quantum-powered Education</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://entangleguard.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">🛡️</span>
+                <span class="name">EntangleGuard</span>
+                <span class="desc">Quantum-secure Communications</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://tensora-539r.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">🧬</span>
+                <span class="name">Tensora</span>
+                <span class="desc">Quantum Drug Discovery · MPS Tensor Network</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://mindcell-frontend.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">🔋</span>
+                <span class="name">MindCell™</span>
+                <span class="desc">Quantum Power Predictor</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://luvuno-quantum-chat-africa-os.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">🌐</span>
+                <span class="name">Luvuno Quantum</span>
+                <span class="desc">Sovereign Edge AI</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://quantum-alpha-frontend.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">📈</span>
+                <span class="name">Quantum Alpha Engine</span>
+                <span class="desc">Financial Intelligence</span>
+                <span class="status">✅ Live</span>
+            </a>
+            <a href="https://quantum-internet-42yz.onrender.com" target="_blank" class="platform-item">
+                <span class="icon">🌍</span>
+                <span class="name">Quantum Internet</span>
+                <span class="desc">JHB ↔ PTA QKD Link</span>
+                <span class="status">✅ Live</span>
+            </a>
+        </div>
+
+        <!-- ===== SCIENCE PAPERS ===== -->
+        <section class="glass-card gold-border" style="margin-top:30px;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                <i class="fas fa-file-pdf" style="font-size:24px;color:var(--glow-gold);"></i>
+                <h2 style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:var(--white);">Science Papers</h2>
+            </div>
+            <div class="papers-grid">
+                <a href="https://drive.google.com/file/d/1bZHWsXSrd3OziJwCC4B-MwMGIleG4lGD/view?usp=sharing" target="_blank" class="paper-btn">
+                    <i class="fas fa-file-pdf"></i> MQOS Science Paper <span style="font-size:8px;color:var(--text-dim);">v2.0</span>
+                </a>
+                <a href="https://drive.google.com/file/d/19ZpyuIsDByMA9nwYu6NhF9FH21EM9ME1/view?usp=sharing" target="_blank" class="paper-btn">
+                    <i class="fas fa-file-pdf"></i> Quantum Storage Paper <span style="font-size:8px;color:var(--text-dim);">v1.1</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ===== VIDEO SECTION ===== -->
+        <section class="glass-card gold-border" style="margin-top:30px;text-align:center;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:16px;">
+                <i class="fas fa-video" style="font-size:24px;color:var(--glow-gold);"></i>
+                <h2 style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:var(--white);">The African Quantum Utility</h2>
+            </div>
+            <div class="video-wrapper">
+                <iframe id="youtubePlayer" src="https://www.youtube.com/embed/fUnC-Ws5KW0?autoplay=1&rel=0&modestbranding=1&showinfo=0&controls=1&iv_load_policy=3" title="The African Quantum Utility" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
+                </iframe>
+            </div>
+            <p style="font-size:12px;color:var(--text-secondary);margin-top:12px;">
+                <strong>CHSH S=2.76 · 38% above classical · 98.4% correlation</strong><br />
+                Built in Africa · Sovereign · IBM-Verified · Patent-Protected
+            </p>
+        </section>
+
+        <!-- ===== ENQUIRY FORM ===== -->
+        <section class="form-section glass-card gold-border" id="contact">
+            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;color:var(--white);margin-bottom:24px;">
+                <i class="fas fa-paper-plane" style="color:var(--glow-gold);"></i> Let's Build Africa's Quantum Future
+            </h2>
+            
+            <form id="enquiryForm" action="https://formsubmit.co/mindtech.industriesai@gmail.com" method="POST">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="MindTech Industries - New Enquiry from Website">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_autoresponse" value="Thank you for contacting MindTech Industries. We'll respond within 24 hours. WhatsApp: +27 60 300 4859">
+                <input type="hidden" name="_cc" value="mindtech.industriesai@gmail.com">
+                <input type="hidden" name="_next" value="https://your-site.com/thank-you.html">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Full Name *</label>
+                        <input type="text" id="fullName" name="name" placeholder="Enter your full name" required />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email Address *</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-building"></i> Organization</label>
+                    <input type="text" id="organization" name="organization" placeholder="Your company or institution" />
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-comment"></i> How can we partner? *</label>
+                    <textarea id="message" name="message" placeholder="Tell us about your interest in quantum technology, partnerships, or investment opportunities..." required></textarea>
+                </div>
+                <button type="submit" class="glass-btn glass-btn-gold" style="width:100%;padding:16px;">
+                    <i class="fas fa-rocket"></i> Send Enquiry
+                </button>
+            </form>
+            
+            <div id="formSuccess" class="form-submit-success">
+                <p style="color: var(--glow-cyan);">
+                    <i class="fas fa-check-circle"></i> 
+                    <strong>Enquiry sent successfully!</strong>
+                </p>
+                <p style="font-size:12px;color:var(--text-dim);margin-top:8px;">
+                    Our team will respond within 24 hours. 
+                    <br>For urgent matters: WhatsApp +27 60 300 4859
+                </p>
+            </div>
+            
+            <div id="formError" class="form-submit-error">
+                <p style="color: #FF6B6B;">
+                    <i class="fas fa-exclamation-circle"></i> 
+                    <strong>Something went wrong.</strong>
+                </p>
+                <p style="font-size:12px;color:var(--text-dim);margin-top:8px;">
+                    Please try again or email us directly at <strong style="color:var(--glow-gold);">mindtech.industriesai@gmail.com</strong>
+                </p>
+            </div>
+            
+            <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--text-dim);font-family:'Share Tech Mono',monospace;">
+                <i class="fas fa-lock"></i> Your data is secure · POPIA/GDPR aligned
+            </p>
+        </section>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer">
+            <div class="footer-left">
+                <div class="footer-logos">
+                    <img src="https://i.postimg.cc/zXW78GNH/Mind-Tech-Transparent-Logo.png" alt="MindTech Industries" />
+                    <img src="https://i.postimg.cc/RFQfK9k5/os-finallogo-removebg-preview.png" alt="MQOS" />
+                    <img src="https://iili.io/COoSb7n.png" alt="Tensora" />
+                    <img src="https://i.postimg.cc/44m1NBFY/Entangle-Guard-New-Logo-image-3-removebg-preview.png" alt="EntangleGuard" />
+                    <img src="https://i.postimg.cc/yYPDHtky/Luvuno-Quantum-Chat-image-removebg-preview.png" alt="Luvuno" />
+                    <img src="https://i.postimg.cc/8zVP7V0t/cleanmachine-image-removebg-preview.png" alt="CleanMachine" />
+                    <img src="https://i.postimg.cc/8PNSz17S/Quantum-INTERNERT-logo-1.png" alt="Quantum Internet" />
+                </div>
+                <span style="display:block;margin-top:6px;">© 2026 MindTech Industries · Sovereign Deep-Tech</span>
+            </div>
+            <div class="footer-right">
+                <div class="footer-quantum">
+                    CHSH S=2.76 · 98.4% · SA 2026/05142<br />
+                    IBM Job: d8uhvl4bp3hs738628cg
+                </div>
+                <span style="display:block;margin-top:4px;font-size:8px;color:var(--text-dim);">
+                    ENSafrica Pro Bono · Matter 0564929
+                </span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Message sent successfully!</span></div>
+
+    <script>
+        // ============================================================
+        // MINDTECH WEBSITE — FULL INTERACTIVE
+        // ============================================================
+
+        // Timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            const ts = now.toISOString().replace('T', ' · ').substring(0, 22) + ' UTC';
+            document.getElementById('ts').textContent = ts;
+        }
+        updateTimestamp();
+        setInterval(updateTimestamp, 1000);
+
+        // Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const msgSpan = document.getElementById('toastMsg');
+            msgSpan.textContent = message;
+            toast.className = 'toast show';
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 4500);
+        }
+
+        // ===== FORMSUBMIT HANDLING =====
+        document.getElementById('enquiryForm').addEventListener('submit', function(e) {
+            const name = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const org = document.getElementById('organization').value.trim() || 'Not provided';
+            const msg = document.getElementById('message').value.trim();
+            
+            console.log('📧 Form submitted to mindtech.industriesai@gmail.com');
+            console.log(`   From: ${name} <${email}>`);
+            console.log(`   Org: ${org}`);
+            console.log(`   Message: ${msg.substring(0, 60)}...`);
+            
+            showToast('📧 Sending your enquiry...');
+        });
+
+        // Check URL for FormSubmit response
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const success = urlParams.get('success');
+            const error = urlParams.get('error');
+            
+            if (success === 'true' || success === '1') {
+                document.getElementById('formSuccess').classList.add('show');
+                document.getElementById('formError').classList.remove('show');
+                showToast('✅ Enquiry sent successfully!');
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            
+            if (error) {
+                document.getElementById('formError').classList.add('show');
+                document.getElementById('formSuccess').classList.remove('show');
+                showToast('❌ Error sending enquiry. Please try again.', 'error');
+            }
+        });
+
+        // YouTube IFrame API
+        let player;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtubePlayer', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            console.log('YouTube Player ready.');
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.ENDED) {
+                console.log('Video ended.');
+            }
+        }
+        
+        // Load YouTube API
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        console.log('🚀 MindTech Industries Website · Quantum Utility');
+        console.log('   ⚛️ CHSH S=2.76 · 98.4% · SA 2026/05142');
+        console.log('   📧 Enquiries go to mindtech.industriesai@gmail.com');
+    </script>
+</body>
+</html>
