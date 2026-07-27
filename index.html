@@ -397,6 +397,7 @@
             text-transform: uppercase;
         }
 
+        /* ===== PLATFORM GRID WITH LOGOS ===== */
         .platform-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -413,16 +414,27 @@
             transition: all 0.3s;
             text-decoration: none;
             color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .platform-item:hover {
             border-color: var(--glow-gold);
             transform: translateY(-6px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
-        .platform-item .icon {
-            font-size: 40px;
+        .platform-item .platform-logo {
+            height: 60px;
+            width: auto;
+            max-width: 180px;
+            object-fit: contain;
             margin-bottom: 12px;
-            display: block;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.1));
+            transition: filter 0.3s, transform 0.3s;
+        }
+        .platform-item:hover .platform-logo {
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.3));
+            transform: scale(1.05);
         }
         .platform-item .name {
             font-family: 'Bebas Neue', sans-serif;
@@ -800,6 +812,10 @@
             .ibm-grid {
                 grid-template-columns: 1fr;
             }
+            .platform-item .platform-logo {
+                height: 50px;
+                max-width: 150px;
+            }
         }
         @media (max-width: 480px) {
             .logo {
@@ -820,6 +836,10 @@
             .ibm-btn {
                 font-size: 12px;
                 padding: 12px 16px;
+            }
+            .platform-item .platform-logo {
+                height: 45px;
+                max-width: 130px;
             }
         }
     </style>
@@ -1014,55 +1034,55 @@
             </div>
         </section>
 
-        <!-- ===== PLATFORM GRID ===== -->
+        <!-- ===== PLATFORM GRID WITH LOGOS ===== -->
         <h2 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--white);margin:20px 0 10px;">
             <i class="fas fa-cube" style="color:var(--glow-gold);"></i> Our Quantum Stack
         </h2>
         <div class="platform-grid">
             <a href="https://quantum-nature-modules.onrender.com" target="_blank" class="platform-item">
-                <span class="icon">🌍</span>
+                <img src="https://i.postimg.cc/QtyvGF3B/Quantum-AI-image-logo-removebg-preview.png" alt="Quantum AI Hub" class="platform-logo">
                 <span class="name">Quantum AI Hub</span>
                 <span class="desc">Climate · Biodiversity · Agriculture</span>
                 <span class="status">✅ Live</span>
             </a>
             <a href="https://symphonious-pothos-042c80.netlify.app" target="_blank" class="platform-item">
-                <span class="icon">🧠</span>
+                <img src="https://i.postimg.cc/RVnfKspQ/Khensani-Transparent-Logo.png" alt="Khensani AI" class="platform-logo">
                 <span class="name">Khensani AI</span>
                 <span class="desc">Quantum-powered Education</span>
                 <span class="status">✅ Live</span>
             </a>
             <a href="https://entangleguard.onrender.com" target="_blank" class="platform-item">
-                <span class="icon">🛡️</span>
+                <img src="https://i.postimg.cc/44m1NBFY/Entangle-Guard-New-Logo-image-3-removebg-preview.png" alt="EntangleGuard" class="platform-logo">
                 <span class="name">EntangleGuard</span>
                 <span class="desc">Quantum-secure Communications</span>
                 <span class="status">✅ Live</span>
             </a>
             <a href="https://tensora-539r.onrender.com" target="_blank" class="platform-item">
-                <span class="icon">🧬</span>
+                <img src="https://iili.io/COoSb7n.png" alt="Tensora — Quantum-Inspired Drug Discovery" class="platform-logo">
                 <span class="name">Tensora</span>
                 <span class="desc">Quantum Drug Discovery · MPS Tensor Network</span>
                 <span class="status">✅ Live</span>
             </a>
             <a href="https://mindcell-frontend.onrender.com" target="_blank" class="platform-item">
-                <span class="icon">🔋</span>
+                <img src="https://i.postimg.cc/RV2KrbsB/Uy-K56e-Tmia4km8y-CEQCey-removebg-preview.png" alt="MindCell™" class="platform-logo">
                 <span class="name">MindCell™</span>
                 <span class="desc">Quantum Power Predictor</span>
                 <span class="status">✅ Live</span>
             </a>
             <a href="https://luvuno-quantum-chat-africa-os.onrender.com" target="_blank" class="platform-item">
-                <span class="icon">🌐</span>
+                <img src="https://i.postimg.cc/yYPDHtky/Luvuno-Quantum-Chat-image-removebg-preview.png" alt="Luvuno Quantum" class="platform-logo">
                 <span class="name">Luvuno Quantum</span>
                 <span class="desc">Sovereign Edge AI</span>
                 <span class="status">✅ Live</span>
             </a>
             <a href="https://quantum-alpha-frontend.onrender.com" target="_blank" class="platform-item">
-                <span class="icon">📈</span>
+                <img src="https://i.postimg.cc/sxBJ9S19/Quantum-Alpha-logo-1.png" alt="Quantum Alpha Engine" class="platform-logo">
                 <span class="name">Quantum Alpha Engine</span>
                 <span class="desc">Financial Intelligence</span>
                 <span class="status">✅ Live</span>
             </a>
             <a href="https://quantum-internet-42yz.onrender.com" target="_blank" class="platform-item">
-                <span class="icon">🌍</span>
+                <img src="https://i.postimg.cc/8PNSz17S/Quantum-INTERNERT-logo-1.png" alt="Quantum Internet" class="platform-logo">
                 <span class="name">Quantum Internet</span>
                 <span class="desc">JHB ↔ PTA QKD Link</span>
                 <span class="status">✅ Live</span>
@@ -1168,13 +1188,15 @@
         <footer class="footer">
             <div class="footer-left">
                 <div class="footer-logos">
-                    <img src="https://i.postimg.cc/zXW78GNH/Mind-Tech-Transparent-Logo.png" alt="MindTech Industries" />
-                    <img src="https://i.postimg.cc/RFQfK9k5/os-finallogo-removebg-preview.png" alt="MQOS" />
-                    <img src="https://iili.io/COoSb7n.png" alt="Tensora" />
-                    <img src="https://i.postimg.cc/44m1NBFY/Entangle-Guard-New-Logo-image-3-removebg-preview.png" alt="EntangleGuard" />
-                    <img src="https://i.postimg.cc/yYPDHtky/Luvuno-Quantum-Chat-image-removebg-preview.png" alt="Luvuno" />
-                    <img src="https://i.postimg.cc/8zVP7V0t/cleanmachine-image-removebg-preview.png" alt="CleanMachine" />
-                    <img src="https://i.postimg.cc/8PNSz17S/Quantum-INTERNERT-logo-1.png" alt="Quantum Internet" />
+                    <img src="https://i.postimg.cc/zXW78GNH/Mind-Tech-Transparent-Logo.png" alt="MindTech Industries">
+                    <img src="https://i.postimg.cc/RFQfK9k5/os-finallogo-removebg-preview.png" alt="MQOS">
+                    <img src="https://i.postimg.cc/QtyvGF3B/Quantum-AI-image-logo-removebg-preview.png" alt="Quantum AI">
+                    <img src="https://i.postimg.cc/44m1NBFY/Entangle-Guard-New-Logo-image-3-removebg-preview.png" alt="EntangleGuard">
+                    <img src="https://i.postimg.cc/yYPDHtky/Luvuno-Quantum-Chat-image-removebg-preview.png" alt="Luvuno">
+                    <img src="https://i.postimg.cc/8zVP7V0t/cleanmachine-image-removebg-preview.png" alt="CleanMachine">
+                    <img src="https://iili.io/COoSb7n.png" alt="Tensora">
+                    <img src="https://i.postimg.cc/RV2KrbsB/Uy-K56e-Tmia4km8y-CEQCey-removebg-preview.png" alt="MindCell">
+                    <img src="https://i.postimg.cc/8PNSz17S/Quantum-INTERNERT-logo-1.png" alt="Quantum Internet">
                 </div>
                 <span style="display:block;margin-top:6px;">© 2026 MindTech Industries · Sovereign Deep-Tech</span>
             </div>
